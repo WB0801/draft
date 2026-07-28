@@ -82,11 +82,32 @@ function draw(){
         return;
     }
 
-    const index=Math.floor(Math.random()*numbers.length);
-    const number=numbers.splice(index,1)[0];
+    const result=document.getElementById("result");
 
-    document.getElementById("result").textContent=number;
-    updateRemaining();
+    let count=0;
+
+    // 快速滚动动画
+    const animation=setInterval(()=>{
+
+        const temp=Math.floor(Math.random()*42)+1;
+        result.textContent=temp;
+
+        count++;
+
+        if(count>=25){
+
+            clearInterval(animation);
+
+            // 真正抽出的号码
+            const index=Math.floor(Math.random()*numbers.length);
+            const number=numbers.splice(index,1)[0];
+
+            result.textContent=number;
+
+            updateRemaining();
+        }
+
+    },60);
 }
 
 function updateRemaining(){
