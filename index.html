@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>随机抽签器</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background:#f5f5f5;
+    margin:40px;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+#result{
+    font-size:100px;
+    font-weight:bold;
+    color:#2196F3;
+    margin:30px 0;
+}
+
+button{
+    font-size:22px;
+    padding:12px 30px;
+    margin:10px;
+    cursor:pointer;
+}
+
+#remaining{
+    font-size:20px;
+    margin-top:20px;
+}
+
+#history{
+    width:80%;
+    margin:30px auto;
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    min-height:80px;
+    font-size:22px;
+    line-height:1.8;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>1～42 随机抽签</h1>
+
+<div id="result">?</div>
+
+<button onclick="draw()">抽一个</button>
+<button onclick="resetDraw()">重新开始</button>
+
+<div id="remaining"></div>
+
+<div id="history"></div>
+
+<script>
+
+let numbers = [];
+
+function resetDraw(){
+    numbers = [];
+
+    for(let i=1;i<=42;i++){
+        numbers.push(i);
+    }
+
+    document.getElementById("result").innerHTML="?";
+    document.getElementById("history").innerHTML="";
+    updateRemaining();
+}
+
+function draw(){
+
+    if(numbers.length===0){
+        alert("全部号码都已经抽完！");
+        return;
+    }
+
+    const index=Math.floor(Math.random()*numbers.length);
+
+    const number=numbers.splice(index,1)[0];
+
+    document.getElementById("result").innerHTML=number;
+
+    const history=document.getElementById("history");
+
+    if(history.innerHTML===""){
+        history.innerHTML=number;
+    }else{
+        history.innerHTML+="、"+number;
+    }
+
+    updateRemaining();
+}
+
+function updateRemaining(){
+    document.getElementById("remaining").innerHTML=
+    "剩余号码：" + numbers.length;
+}
+
+resetDraw();
+
+</script>
+
+</body>
+</html>
